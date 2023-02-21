@@ -17,6 +17,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+
     return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
@@ -25,8 +26,8 @@ def upload():
     file.save(f'uploads/{file.filename}')
     prediction = model.predict([prepare(f'uploads/{file.filename}')])
     result = CATEGORIES[int(prediction[0][0])]
-    return result
     #return redirect('/')
+    return render_template('index.html', variable=result)
 
 if __name__ == '__main__':
     app.run(debug=True)
